@@ -30,3 +30,6 @@ Many commands are baked in by default -- full alphanumeric support, plus spaceba
 
 ## What's with all of these references to Telegram, and these generic functions?
 This started as a combined Discord & Telegram bot I made. With a little more work it will be possible to make this support `TelegramPlays` as well as `DiscordPlays`. At that time I will probably change the repo name. Sorry for the confusion! As of right now the bot only supports Discord.
+
+## Credits
+This project used [hzoo's Twitch Plays X](https://github.com/hzoo/TwitchPlaysX/) as a starting point. This project is under the same MIT license as that project -- it's great!
