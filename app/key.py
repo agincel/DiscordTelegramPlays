@@ -7,13 +7,13 @@ import time,sys
 
 keyDelay = 0.35
 keymap = {
-    "Up": win32con.VK_UP,
-    "Left": win32con.VK_LEFT,
-    "Down": win32con.VK_DOWN,
-    "Right": win32con.VK_RIGHT,
-    "Shift": 0x10,
-    "Enter": 0x0D,
-    "Space": 0x20,
+    "up": win32con.VK_UP,
+    "left": win32con.VK_LEFT,
+    "down": win32con.VK_DOWN,
+    "right": win32con.VK_RIGHT,
+    "shift": 0x10,
+    "enter": 0x0D,
+    "space": 0x20,
     "a": ord("A"),
     "b": ord("B"),
     "c": ord("C"),
@@ -58,8 +58,8 @@ def sendKey(button):
     win32api.keybd_event(keymap[button], 0, win32con.KEYEVENTF_KEYUP, 0)
 
 if __name__ == "__main__":
-    #win = win32ui.FindWindow(None, sys.argv[1])
+    #win = win32ui.FindWindow(None, sys.argv[2]) #add another argument with window name and comment out the next line if you want only a specific window
     win = win32ui.GetForegroundWindow()
     win.SetForegroundWindow()
     win.SetFocus()
-    sendKey(sys.argv[2])
+    sendKey(sys.argv[1])
