@@ -1,12 +1,11 @@
-var spawn = require("child_process").spawn;
-var config = require('./config.js'),
-lastTime = {},
-windowID = 'unfilled',
-throttledCommands = config.throttledCommands,
-regexThrottle = new RegExp('^(' + throttledCommands.join('|') + ')$', 'i'),
-regexFilter = new RegExp('^(' + config.filteredCommands.join('|') + ')$', 'i');
+const spawn = require("child_process").spawn;
+const config = require('./config.js');
+const lastTime = {};
+const throttledCommands = config.throttledCommands;
+const regexThrottle = new RegExp('^(' + throttledCommands.join('|') + ')$', 'i');
+const regexFilter = new RegExp('^(' + config.filteredCommands.join('|') + ')$', 'i');
 
-for (var i = 0; i < throttledCommands.length; i++) {
+for (let i = 0; i < throttledCommands.length; i++) {
     lastTime[throttledCommands[i]] = new Date().getTime();
 }
 
@@ -16,21 +15,14 @@ function delay(t) {
 	});
 }
 
-
-function setWindowID() {
-    if (config.os === 'other' & windowID === 'unfilled') {
-        exec('xdotool search --onlyvisible --name ' + config.programName, function(error, stdout) {
-            windowID = stdout.trim();
-            // console.log(key, windowID);
-        });
-    }
-}
-
-var defaultKeyMap = {
+//If an accepted command should remap to something else before being sent to key.py, put it here
+const keyMap = {
     'start':'s','select':'e'
 };
 
-var mouseMap = {
+//If a command is supposed to fire a mouse click at a specific x,y coordinate, put it here with the value as "x,y"
+//If a command is both here and in keyMap, mouseMap will take precedence.
+const mouseMap = {
 		"c1":"547,407",
 		"c2":"617,407",
 		"c3":"681,407",
@@ -76,8 +68,8 @@ var mouseMap = {
 async function sendKey(command) {
     //if doesn't match the filtered words
     if (!command.match(regexFilter)) {
-        var allowKey = true,
-        key = defaultKeyMap[command] || command;
+        let allowKey = true,
+        key = keyMap[command] || command;
         //throttle certain commands (not individually though)
         if (key.match(regexThrottle)) {
             var newTime = new Date().getTime();
@@ -97,9 +89,5 @@ async function sendKey(command) {
         }
     }
 }
-
-
-//Only actually does something when not running under windows.
-setWindowID();
 
 exports.sendKey = sendKey;

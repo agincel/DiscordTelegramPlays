@@ -1,5 +1,3 @@
-//var nconf = require('nconf').argv().env().file({ file:'config.json' });
-
 // List of commands to check for
 const commands = [
   "left",
@@ -89,12 +87,13 @@ const commands = [
   "end"
 ];
 
-const ircConfig = {
-  // Either 'windows' or 'other'
+const programConfig = {
+  // Either 'windows' or 'other', currently only windows works
   os: "windows",
 
   // Title of the window of the program
   // Ex: 'Desmume' or 'VBA'
+  // Currently disabled for DiscordTelegramPlays, which instead sends input to the ForegroundWindow
   programName: "na",
 
   // Ex: irc.twitch.tv or 199.9.252.26
@@ -126,12 +125,14 @@ const ircConfig = {
   // Ex: you can limit 'start' so it's only used every 10 sec
   timeToWait: 10000,
 
-  // Linux: delay between each possible keypress in ms (can't be too fast)
-  // If you want to change delay for windows - change key.py
+  // Delay between consecutive commands in one message in Anarchy mode
   delay: 150,
 
   sendKey: true,
-  commands: commands
+  commands: commands,
+  executePerMessage: 4,
+  mode: "democracy", // "democracy" to tally votes every democracyTimer seconds, or "anarchy" to send all inputs through
+  democracyTimer: 10000 // number of milliseconds to wait between each input
 };
 
-module.exports = ircConfig;
+module.exports = programConfig;
